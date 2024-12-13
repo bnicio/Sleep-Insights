@@ -9,9 +9,13 @@ import SwiftUI
 
 @main
 struct sleep_trackerApp: App {
+    private let healthDataFetcher = HealthDataFetcher()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SleepSummaryView()
+                .onAppear {
+                    healthDataFetcher.requestAuthorization()
+                }
         }
     }
 }
