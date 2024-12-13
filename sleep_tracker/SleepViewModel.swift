@@ -16,6 +16,8 @@ class SleepViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     func fetchSleepData() {
+        print("SleepViewModel -> fetchSleepData()")
+        
         isLoading = true
         
         dataManager.fetchSleepSummary()

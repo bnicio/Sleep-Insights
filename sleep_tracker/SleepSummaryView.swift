@@ -17,11 +17,17 @@ struct SleepSummaryView: View {
                     ProgressView("Lade Schlafdaten...")
                 } else if let sleepData = viewModel.sleepData {
                     VStack(alignment: .leading, spacing: 20) {
-                        Text("Durchschnittliche Schlafdauer: \(sleepData.averageDuration) Stunden")
+                        Text("7 Tage Durchschnitt: \(formattedDuration(sleepData.averageDurationLast7Days))")
                         Text("Zu Bett Geh Zeit: \(sleepData.bedtime)")
                         Text("Aufwachzeit: \(sleepData.wakeTime)")
+                        Text("SleepDuration Array Werte:")
+                        ForEach(sleepData.sleepDuration.sorted{ $0.key < $1.key}, id: \.0) { (date, duration) in
+                            Text("\(formattedDate(date)): \(formattedDuration(duration))")
+                        }
                     }
                     .padding()
+
+                    Spacer()
                 } else {
                     Text("Keine Schlafdaten verfügbar.")
                 }
@@ -32,6 +38,19 @@ struct SleepSummaryView: View {
             }
         }
     }
+    
+    private func formattedDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.string(from: date)
+    }
+    
+    private func formattedDuration(_ duration: Double) -> String {
+         let hours = Int(duration) // Ganzzahlige Stunden
+         let minutes = Int((duration - Double(hours)) * 60) // Restliche Minuten
+         return "\(hours) Stunden \(minutes) Minuten"
+     }
 }
 
 #Preview {
