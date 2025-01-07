@@ -10,12 +10,14 @@ import Foundation
 struct SleepData {
     let sleepDuration: [Date:Double]
     let averageDurationLast7Days: Double
-    let bedtime: String
-    let wakeTime: String
+    let lastNightBedtime: String
+    let lastNightWakeTime: String
+    let lastNightSleepDuration: Double
+    let durationChangeToAverageLast7Days: Double
 }
 
 struct RawSleepData {
     let sleepDuration: [Date:Double]
-    let bedtime: String
-    let wakeTime: String
+    let bedtime: [Date:Date]
+    let wakeTime: [Date:Date]
 }
