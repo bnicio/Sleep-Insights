@@ -235,7 +235,6 @@ struct SleepSummaryView: View {
                 .padding(.horizontal)
                 
                 
-                
                 VStack {
                     if viewModel.isLoading {
                         ProgressView("Lade Schlafdaten...")
