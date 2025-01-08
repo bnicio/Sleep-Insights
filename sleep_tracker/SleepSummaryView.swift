@@ -8,6 +8,13 @@
 import SwiftUI
 import Charts
 
+struct SleepData1: Identifiable {
+    let id = UUID()
+    let stage: String
+    let start: Double
+    let end: Double
+}
+
 struct SleepSummaryView: View {
     @StateObject private var viewModel = SleepViewModel()
     
@@ -20,7 +27,12 @@ struct SleepSummaryView: View {
         Box(title: "Box 4")
     ]
     
-    @State private var draggedBox: Box? // Temporär gehaltene Box für Drag
+    let sleepData: [SleepData1] = [
+        SleepData1(stage: "Awake", start: 0.0, end: 1.0),
+        SleepData1(stage: "REM", start: 1.0, end: 2.5),
+        SleepData1(stage: "Core", start: 2.5, end: 4.0),
+        SleepData1(stage: "Deep", start: 4.0, end: 5.0)
+    ]
     
     var body: some View {
         NavigationView {
@@ -38,6 +50,8 @@ struct SleepSummaryView: View {
                     .padding(.horizontal)
                     .padding(.vertical)
                 })
+                
+                //MARK: - Box 1
                 
                 VStack(alignment: .leading) {
                     Text("Diese Nacht").bold().padding(.leading)
@@ -76,7 +90,7 @@ struct SleepSummaryView: View {
                         Spacer()
                     }
                     .background(Color(.systemGray5).cornerRadius(20))
-                    .frame(height: 200)
+                    .frame(height: 180)
                     .padding(.horizontal)
                 }
         
@@ -156,15 +170,16 @@ struct SleepSummaryView: View {
                     .frame(height: 180)
                     .cornerRadius(20)
                     
+                //MARK: - Box 2
                 GroupBox {
                     VStack {
                         HStack {
-                            Text("Durch. HFQ")
+                            Text("Hypnogram")
                                 .bold()
-                            Spacer()
-                            Text("63")
-                                .font(.system(size: 20))
-                                .bold()
+//                            Spacer()
+//                            Text("63")
+//                                .font(.system(size: 20))
+//                                .bold()
                             Spacer()
                         }
                         .frame(maxWidth: .infinity)
@@ -172,54 +187,57 @@ struct SleepSummaryView: View {
                         Spacer()
 
                         Chart {
-                            BarMark(x: .value("Time", 1), yStart: .value("Test", 54), yEnd: .value("Test", 61))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 2), yStart: .value("Test", 60), yEnd: .value("Test", 70))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 3), yStart: .value("Test", 63), yEnd: .value("Test", 73))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 4), yStart: .value("Test", 57), yEnd: .value("Test", 67))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 5), yStart: .value("Test", 59), yEnd: .value("Test", 67))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 6), yStart: .value("Test", 60), yEnd: .value("Test", 64))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 7), yStart: .value("Test", 60), yEnd: .value("Test", 64))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 8), yStart: .value("Test", 60), yEnd: .value("Test", 64))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
-                            BarMark(x: .value("Time", 9), yStart: .value("Test", 63), yEnd: .value("Test", 69))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                            BarMark(xStart: .value("Time", 0),
+                                    xEnd: .value("Time", 2),
+                                    y: .value("Test", "Awake"))
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
                             
-                            RuleMark(xStart: .value("", 0),
-                                     xEnd: .value("", 10),
-                                     y: .value("Test2", 63))
-                            .annotation(position: .trailing) {
-                                Text("63").bold()
-                            }
+                            BarMark(xStart: .value("Time", 2),
+                                    xEnd: .value("Time", 6),
+                                    y: .value("Test", "Asleep"))
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
                             
-                            RuleMark(xStart: .value("", 2),
-                                     xEnd: .value("", 4),
-                                     y: .value("Test2", 73.5))
-                            .annotation(position: .top) {
-                                Text("Max: 73")
-                                    .bold()
-                                    .font(.system(size: 10))
-                                    .offset(x: 0, y: 2)
-                            }
+                            BarMark(xStart: .value("Time", 6),
+                                    xEnd: .value("Time", 7),
+                                    y: .value("Test", "Awake"))
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
                             
-                            RuleMark(xStart: .value("", 0),
-                                     xEnd: .value("", 2),
-                                     y: .value("Test2", 53.5))
-                            .annotation(position: .bottom) {
-                                Text("Min: 54").font(.system(size: 10)).bold().offset(x: 0, y: -2)
-                            }
+                            BarMark(xStart: .value("Time", 7),
+                                    xEnd: .value("Time", 9),
+                                    y: .value("Test", "Asleep"))
+                                .clipShape(RoundedRectangle(cornerRadius: 4))
+                            
+//                            RectangleMark(
+//                                xStart: .value("Rect Start Width", 6),
+//                                xEnd: .value("Rect End Width", 8),
+//                                yStart: .value("Rect End Height", "Awake"),
+//                                yEnd: .value("test", "Awake")
+//                            )
+//                            .opacity(0.2)
+//                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                            
+                            
+                            RectangleMark(
+                                xStart: .value("Rect Start Width", 0),
+                                xEnd: .value("Rect End Width", 5.2),
+                                yStart: .value("Rect End Height", "Awake"),
+                                yEnd: .value("test", "Awake")
+                            )
+                            .opacity(0.2)
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
                         }
-                        .chartXAxis(.hidden)
-                        .chartYAxis(.hidden)
-                        .chartYScale(domain: 54...78)
-                        .frame(maxWidth: 135)
-                        .foregroundStyle(.red)
+//                        .chartXAxis(.hidden)
+//                        .chartYAxis(.hidden)
+//                        .chartYScale(domain: ["Awake", "Asleep"])
+//                        .frame(maxWidth: 135)
+//                        .foregroundStyle(Color(.cyan))
+//                        .mask {
+//                            LinearGradient(
+//                                colors: [.green, .yellow],
+//                                startPoint: .top,
+//                                endPoint: .bottom
+//                            )
+//                        }
                         
                         
                         Spacer()
@@ -233,7 +251,7 @@ struct SleepSummaryView: View {
                     
                 }
                 .padding(.horizontal)
-                
+            
                 
                 VStack {
                     if viewModel.isLoading {
