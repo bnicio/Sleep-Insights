@@ -58,200 +58,44 @@ struct SleepSummaryView: View {
                         .font(.system(size: 18))
                         .offset(y: 6)
                     
-                    HStack {
-                        ZStack {
-                            Circle()
-                                .frame(width: 170, height: 170)
-                                .foregroundStyle(.blue)
-
-                            Circle()
-                                .frame(width: 120, height: 120)
-                                .foregroundStyle(Color(.systemGray5))
-                            
-                            Text("86")
-                                .bold()
-                                .font(.system(size: 40))
-                        }
+                    BigBoxView()
+                        .background(Color(.systemGray5).cornerRadius(20))
+                        .frame(height: 180)
                         .padding()
-                        
-//                        Spacer()
-//                            .frame(maxWidth: .infinity)
-//                            .frame(maxHeight: .infinity)
-                        
-                        VStack(alignment: .leading) {
-                            Text("Dauer: 8:12 h")
-                            Text("Tiefe: 1:43 h")
-                            Text("Leicht: 5:32 h")
-                            Text("REM: 0:32 h")
-                            Text("Wach: 0:32 h")
-                            Text("Unruhige Momente: 12")
-                        }
-                        
-                        Spacer()
-                    }
-                    .background(Color(.systemGray5).cornerRadius(20))
-                    .frame(height: 180)
-                    .padding(.horizontal)
                 }
         
                 
-                LazyVGrid(columns: columns, spacing: 10) {
-                    GroupBox {
-                        VStack {
-                            HStack {
-                                Text("Durch. HFQ")
-                                    .bold()
-                                Spacer()
-                                Text("63")
-                                    .font(.system(size: 20))
-                                    .bold()
-                                Spacer()
-                            }
-                            .frame(maxWidth: .infinity)
-                            Divider()
-                            Spacer()
-
-                            Chart {
-                                BarMark(x: .value("Time", 1), yStart: .value("Test", 54), yEnd: .value("Test", 61))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 2), yStart: .value("Test", 60), yEnd: .value("Test", 70))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 3), yStart: .value("Test", 63), yEnd: .value("Test", 73))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 4), yStart: .value("Test", 57), yEnd: .value("Test", 67))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 5), yStart: .value("Test", 59), yEnd: .value("Test", 67))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 6), yStart: .value("Test", 60), yEnd: .value("Test", 64))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 7), yStart: .value("Test", 60), yEnd: .value("Test", 64))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 8), yStart: .value("Test", 60), yEnd: .value("Test", 64))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                BarMark(x: .value("Time", 9), yStart: .value("Test", 63), yEnd: .value("Test", 69))
-                                    .clipShape(RoundedRectangle(cornerRadius: 10))
-                                
-                                RuleMark(xStart: .value("", 0),
-                                         xEnd: .value("", 10),
-                                         y: .value("Test2", 63))
-                                .annotation(position: .trailing) {
-                                    Text("63").bold()
-                                }
-                                
-                                RuleMark(xStart: .value("", 2),
-                                         xEnd: .value("", 4),
-                                         y: .value("Test2", 73.5))
-                                .annotation(position: .top) {
-                                    Text("Max: 73")
-                                        .bold()
-                                        .font(.system(size: 10))
-                                        .offset(x: 0, y: 2)
-                                }
-                                
-                                RuleMark(xStart: .value("", 0),
-                                         xEnd: .value("", 2),
-                                         y: .value("Test2", 53.5))
-                                .annotation(position: .bottom) {
-                                    Text("Min: 54").font(.system(size: 10)).bold().offset(x: 0, y: -2)
-                                }
-                            }
-                            .chartXAxis(.hidden)
-                            .chartYAxis(.hidden)
-                            .chartYScale(domain: 54...78)
-                            .frame(maxWidth: 135)
-                            .foregroundStyle(.red)
-                            
-                            
-                            Spacer()
-                        }
-                        .frame(maxHeight: .infinity)
-                    }
-                    .backgroundStyle(Color(.systemGray5))
-                    .frame(height: 180)
-                    .cornerRadius(20)
+                LazyVGrid(columns: columns, spacing: 20) {
                     
-                //MARK: - Box 2
-                GroupBox {
-                    VStack {
-                        HStack {
-                            Text("Hypnogram")
-                                .bold()
-//                            Spacer()
-//                            Text("63")
-//                                .font(.system(size: 20))
-//                                .bold()
-                            Spacer()
-                        }
-                        .frame(maxWidth: .infinity)
-                        Divider()
-                        Spacer()
-
-                        Chart {
-                            BarMark(xStart: .value("Time", 0),
-                                    xEnd: .value("Time", 2),
-                                    y: .value("Test", "Awake"))
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                            
-                            BarMark(xStart: .value("Time", 2),
-                                    xEnd: .value("Time", 6),
-                                    y: .value("Test", "Asleep"))
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                            
-                            BarMark(xStart: .value("Time", 6),
-                                    xEnd: .value("Time", 7),
-                                    y: .value("Test", "Awake"))
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                            
-                            BarMark(xStart: .value("Time", 7),
-                                    xEnd: .value("Time", 9),
-                                    y: .value("Test", "Asleep"))
-                                .clipShape(RoundedRectangle(cornerRadius: 4))
-                            
-//                            RectangleMark(
-//                                xStart: .value("Rect Start Width", 6),
-//                                xEnd: .value("Rect End Width", 8),
-//                                yStart: .value("Rect End Height", "Awake"),
-//                                yEnd: .value("test", "Awake")
-//                            )
-//                            .opacity(0.2)
-//                            .clipShape(RoundedRectangle(cornerRadius: 4))
-                            
-                            
-                            RectangleMark(
-                                xStart: .value("Rect Start Width", 0),
-                                xEnd: .value("Rect End Width", 5.2),
-                                yStart: .value("Rect End Height", "Awake"),
-                                yEnd: .value("test", "Awake")
-                            )
-                            .opacity(0.2)
-                            .clipShape(RoundedRectangle(cornerRadius: 4))
-                        }
-//                        .chartXAxis(.hidden)
-//                        .chartYAxis(.hidden)
-//                        .chartYScale(domain: ["Awake", "Asleep"])
-//                        .frame(maxWidth: 135)
-//                        .foregroundStyle(Color(.cyan))
-//                        .mask {
-//                            LinearGradient(
-//                                colors: [.green, .yellow],
-//                                startPoint: .top,
-//                                endPoint: .bottom
-//                            )
-//                        }
-                        
-                        
-                        Spacer()
-                    }
-                    .frame(maxHeight: .infinity)
-                }
-                .backgroundStyle(Color(.systemGray5))
-                .frame(height: 180)
-                .cornerRadius(20)
-            
+                    NavigationLink(destination: {
+                        HFQView()
+                            .navigationTitle("Herzfrequenz")
+                    }, label: {
+                        BoxHFRQView()
+                    })
+                        .backgroundStyle(Color(.systemGray5))
+                        .frame(height: 180)
+                        .cornerRadius(20)
+                        .buttonStyle(.plain)
                     
+                    HypnoGramView()
+                        .backgroundStyle(Color(.systemGray5))
+                        .frame(height: 180)
+                        .cornerRadius(20)
                 }
                 .padding(.horizontal)
-            
+                
+                HStack (alignment: .top, content: {
+                    Text("Letzen 7 Tage").bold().padding(.leading)
+                    Spacer()
+                })
+                .padding(.vertical)
+                
+                HStack (alignment: .top, content: {
+                    Text("Trends").bold().padding(.leading)
+                    Spacer()
+                })
+                .padding(.vertical)
                 
                 VStack {
                     if viewModel.isLoading {
